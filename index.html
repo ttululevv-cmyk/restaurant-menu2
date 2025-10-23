@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Red Cup Coffee - Кофейня с душой</title>
+    <meta name="description" content="Red Cup Coffee - лучшая кофейня в городе. Свежеобжаренный кофе, авторские напитки и уютная атмосфера.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --red: #dc2626;
+            --dark-red: #b91c1c;
+            --light-red: #fef2f2;
+            --brown: #78350f;
+            --cream: #fef7ed;
+            --dark: #1c1917;
+        }
+
+        body {
+            background-color: var(--cream);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--red), var(--dark-red));
+            color: white;
+            padding: 0.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 20px rgba(220, 38, 38, 0.3);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .logo-icon {
+            width: 35px;
+            height: 35px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--red);
+            font-size: 0.9rem;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .tagline {
+            font-style: italic;
+            color: var(--cream);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .contact-header {
+            margin-top: 0.3rem;
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
+        .category-nav {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 1rem 0;
+        }
+
+        .category-btn {
+            background-color: white;
+            color: var(--red);
+            border: 2px solid white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 0.85rem;
+        }
+
+        .category-btn:hover, .category-btn.active {
+            background-color: var(--dark-red);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(220, 38, 38, 0.3);
+        }
+
+        .menu-category {
+            margin-bottom: 2rem;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .category-title {
+            font-size: 1.7rem;
+            color: var(--dark-red);
+            margin-bottom: 1rem;
+            padding-bottom: 0.3rem;
+            border-bottom: 2px solid var(--red);
+            display: inline-block;
+        }
+
+        .menu-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.2rem;
+        }
+
+        .menu-item {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 6px 20px rgba(220, 38, 38, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            border: 1px solid var(--light-red);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(220, 38, 38, 0.15);
+        }
+
+        .item-image {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .menu-item:hover .item-image {
+            transform: scale(1.03);
+        }
+
+        .item-details {
+            padding: 1.2rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .item-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.4rem;
+            color: var(--dark);
+        }
+
+        .item-description {
+            color: #666;
+            margin-bottom: 0.8rem;
+            font-size: 0.85rem;
+            line-height: 1.4;
+            flex-grow: 1;
+        }
+
+        .item-price {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--red);
+            text-align: center;
+            padding: 0.6rem;
+            background: var(--light-red);
+            border-radius: 8px;
+            margin-top: auto;
+        }
+
+        .price-variants {
+            display: flex;
+            justify-content: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .price-variant {
+            background: var(--light-red);
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .hero {
+            background: linear-gradient(rgba(220, 38, 38, 0.9), rgba(185, 28, 28, 0.9)), url('https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2078&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 2.5rem 0;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero h2 {
+            font-size: 2.2rem;
+            margin-bottom: 0.8rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .visit-us {
+            background: white;
+            color: var(--dark);
+            padding: 0.7rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 600;
+            margin-top: 1rem;
+            display: inline-block;
+            border: 2px solid var(--red);
+            font-size: 0.9rem;
+        }
+
+        .coffee-bean {
+            color: var(--brown);
+            margin: 0 0.3rem;
+        }
+
+        footer {
+            background: linear-gradient(135deg, var(--red), var(--dark-red));
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            text-align: left;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 0.8rem;
+            color: var(--cream);
+            font-size: 1rem;
+        }
+
+        .footer-section p {
+            font-size: 0.85rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 0.8rem;
+            margin-top: 0.8rem;
+        }
+
+        .social-links a {
+            color: white;
+            text-decoration: none;
+            padding: 0.4rem 0.8rem;
+            background: rgba(255,255,255,0.2);
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            font-size: 0.8rem;
+        }
+
+        .social-links a:hover {
+            background: var(--cream);
+            color: var(--red);
+        }
+
+        .copyright {
+            margin-top: 1.5rem;
+            padding-top: 0.8rem;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            font-size: 0.8rem;
+        }
+
+        .special-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: var(--red);
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .location-info {
+            background: var(--light-red);
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            margin: 1.5rem 0;
+            border: 2px solid var(--red);
+        }
+
+        .location-info h3 {
+            color: var(--dark-red);
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+        }
+
+        .location-info p {
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .volume-info {
+            font-size: 0.7rem;
+            color: #666;
+            margin-top: 0.3rem;
+        }
+
+        @media (max-width: 768px) {
+            .menu-items {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            .category-title {
+                font-size: 1.4rem;
+            }
+            
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+            
+            .category-nav {
+                gap: 5px;
+            }
+            
+            .category-btn {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.8rem;
+            }
+            
+            .price-variants {
+                gap: 0.4rem;
+            }
+            
+            .price-variant {
+                padding: 0.3rem 0.6rem;
+                font-size: 0.8rem;
+            }
+            
+            .hero {
+                padding: 2rem 0;
+            }
+            
+            .container {
+                padding: 0.8rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <div class="logo-icon">RC</div>
+                <div>
+                    <h1>Red Cup Coffee</h1>
+                    <p class="tagline">Кофе, который стоит красной чашки</p>
+                </div>
+            </div>
+            <p class="contact-header">📞 +7 (999) 123-45-67 | 🕒 7:00 - 23:00 | 📍 ул. Кофейная, 15</p>
+            <div class="category-nav">
+                <button class="category-btn active" data-category="all">Всё меню</button>
+                <button class="category-btn" data-category="coffee">Кофе</button>
+                <button class="category-btn" data-category="special">Что-то вкусненькое</button>
+                <button class="category-btn" data-category="hot-drinks">Горячие напитки</button>
+                <button class="category-btn" data-category="hot-dogs">Хот-доги</button>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h2>Red Cup Coffee</h2>
+            <p>Наслаждайтесь искусством кофе в каждой чашке. Свежая обжарка, авторские рецепты и уютная атмосфера.</p>
+            <div class="visit-us">Приходите к нам в гости!</div>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="location-info">
+            <h3>🕒 Часы работы</h3>
+            <p>Понедельник - Пятница: 7:00 - 23:00</p>
+            <p>Суббота - Воскресенье: 8:00 - 00:00</p>
+            <p><strong>📍 Адрес:</strong> ул. Кофейная, 15</p>
+        </div>
+
+        <!-- КОФЕ -->
+        <section class="menu-category" id="coffee">
+            <h2 class="category-title">Кофе <span class="coffee-bean">☕</span></h2>
+            <div class="menu-items">
+                <div class="menu-item">
+                    <img src="https://images.unsplash.com/photo-1561047029-3000c68339ca?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Эспрессо" class="item-image">
+                    <div class="item-details">
+                        <h3 class="item-name">Эспрессо + вода</h3>
+                        <p class="item-description">Классический эспрессо с отдельной порцией воды</p>
+                        <div class="item-price">170 ₽ <div class="volume-info">60 мл.</div></div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://images.unsplash.com/photo-1559056199-641a0ac8b55e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Американо" class="item-image">
+                    <div class="item-details">
+                        <h3 class="item-name">Американо</h3>
+                        <p class="item-description">Классический черный кофе</p>
+                        <div class="price-variants">
+                            <div class="price-variant">170 ₽ <div class="volume-info">мал.</div></div>
+                            <div class="price-variant">200 ₽ <div class="volume-info">сред.</div></div>
+                            <div class="price-variant">230 ₽ <div class="volume-info">бол.</div></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://images.unsplash.com/photo-1572442388796-11668a67e53d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Капучино" class="item-image">
+                    <div class="item-details">
+                        <h3 class="item-name">Капучино</h3>
+                        <p class="item-description">Идеальное сочетание эспрессо и молочной пенки</p>
+                        <div class="price-variants">
+                            <div class="price-variant">200 ₽ <div class="volume-info">мал.</div></div>
+                            <div class="price-variant">230 ₽ <div class="volume-info">сред.</div></div>
+                            <div class="price-variant">260 ₽ <div class="volume-info">бол.</div></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2068&q=80" alt="Латте" class="item-image">
+                    <div class="item-details">
+                        <h3 class="item-name">Латте</h3>
+                        <p class="item-description">Нежный кофе с большим количеством молока</p>
+                        <div class="price-variants">
+                            <div class="price-variant">230 ₽ <div class="volume-info">мал.</div></div>
+                            <div class="price-variant">260 ₽ <div class="volume-info">бол.</div></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://images.unsplash.com/photo-1572442388796-11668a67e53d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Флэт Уайт" class="item-image">
+                    <div class="item-details">
+                        <h3 class="item-name">Флэт Уайт</h3>
+                        <p class="item-description">Напиток на основе двойного эспрессо с тонкой молочной пенкой</p>
+                        <div class="item-price">230 ₽ <div class="volume-info">мал.</div></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ЧТО-ТО ВКУСНЕНЬКОЕ -->
+        <section class="menu-category" id="special">
+            <h2 class="category-title">Что-то вкусненькое <span class="coffee-bean">✨</span></h2>
+            <div class="menu-items">
+                <div class="menu-item">
+                    <div class="special-badge">Популярное</div>
+                    <img src="https://images.unsplash.com/photo-1571781418606-70265b9ec59f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80" alt="Какао" class="item-image">
+                    <div class="item-details">
+                        <h3 class="item-name">Какао</h3>
+                        <p class="item-description">Насыщенный шоколадный напиток</p>
+                        <div class="price-variants">
+                            <div class="price-variant">170 ₽ <div class="volume-info">мал.</div></div>
+                            <div class="price-variant">200 ₽ <div class="volume-info">сред.</div></div>
+                            <div class="price-variant">230 ₽ <div class="volume-info">бол.</div></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://images.unsplash.com/photo-1676817552868-80bffac69d30?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80" alt="Матча" class="item-image">
+                    <div class="item-details">
+                        <h3 class="item-name">Матча</h3>
+                        <p class="item-description">Традиционный японский зеленый чай</p>
+                        <div class="price-variants">
+                            <div class="price-variant">270 ₽ <div class="volume-info">сред.</div></div>
+                            <div class="price-variant">310 ₽ <div class="volume-info">бол.</div></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://images.unsplash.com/photo-1560765044-db6d34dfb990?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80" alt="Моккачино" class="item-image">
+                    <div class="item-details">
+                        <h3 class="item-name">Моккачино</h3>
+                        <p class="item-description">Кофе с шоколадом и молочной пенкой</p>
+                        <div class="price-variants">
+                            <div class="price-variant">270 ₽ <div class="volume-info">сред.</div></div>
+                            <div class="price-variant">310 ₽ <div class="volume-info">бол.</div></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="special-badge">Хит</div>
+                    <img src="https://images.unsplash.com/photo-1572442388796-11668a67e53d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Раф" class="item-image">
+                    <div class="item-details">
+                        <h3 class="item-name">Раф</h3>
+                        <p class="item-description">Взбитый кофе со сливками и ванильным сиропом</p>
+                        <div class="price-variants">
+                            <div class="price-variant">270 ₽ <div class="volume-info">сред.</div></div>
+                            <div class="price-variant">310 ₽ <div class="volume-info">бол.</div></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://images.unsplash.com/photo-1572442388796-11668a67e53d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Раф с халвой" class="item-image">
+                    <div class="item-details">
+                        <h3 class="item-name">Раф с халвой</h3>
+                        <p class="item-description">Нежный раф с добавлением халвы</p>
+                        <div class="price-variants">
+                            <div class="price-variant">290 ₽ <div class="volume-info">сред.</div></div>
+                            <div class="price-variant">330 ₽ <div class="volume-info">бол.</div></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://images.unsplash.com/photo-1572442388796-11668a67e53d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Сырный раф" class="item-image">
+                    <div class="item-details">
+                        <h3 class="item-name">Сырный раф с карамелью</h3>
+                        <p class="item-description">Раф с сырным кремом и карамельным сиропом</p>
+                        <div class="item-price">330 ₽ <div class="volume-info">бол.</div></div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://images.unsplash.com/photo-1572442388796-11668a67e53d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Банановый раф" class="item-image">
+                    <div class="item-details">
+                        <h3 class="item-name">Банановый раф</h3>
+                        <p class="item-description">Раф с банановым сиропом и сливками</p>
+                        <div class="item-price">310 ₽ <div class="volume-info">бол.</div></div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://images.unsplash.com/photo-1572442388796-11668a67e53d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Грушевый раф" class="item-image">
+                    <div class="item-details">
+                        <h3 class="item-name">Грушевый раф</h3>
+                        <p class="item-description">Раф с грушевым сиропом и корицей</p>
+                        <div class="item-price">310 ₽ <div class="volume-info">бол.</div></div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2068&q=80" alt="Пряный латте" class="item-image">
+                    <div class="item-details">
+                        <h3 class="item-name">Пряный латте</h3>
+                        <p class="item-description">Латте с добавлением пряностей</p>
+                        <div class="item-price">290 ₽ <div class="volume-info">бол.</div></div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2068&q=80" alt="Карамельный латте" class="item-image">
+                    <div class="item-details">
+                        <h3 class="item-name">Карамельный латте</h3>
+                        <p class="item-description">Латте с карамельным сиропом</p>
+                        <div class="item-price">290 ₽ <div class="volume-info">бол.</div></div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2068&q=80" alt="Тыквенный латте" class="item-image">
+                    <div class="item-details">
+                        <h3 class="item-name">Тыквенный латте</h3>
+                        <p class="item-description">Сезонный латте с тыквенным сиропом и специями</p>
+                        <div class="item-price">310 ₽ <div class="volume-info">бол.</div></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ГОРЯЧИЕ НАПИТКИ -->
+        <section class="menu-category" id="hot-drinks">
+            <h2 class="category-title">Горячие напитки <span class="coffee-bean">🔥</span></h2>
+            <div class="menu-items">
+                <div class="menu-item">
+                    <img src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2064&q=80" alt="Чай черный" class="item-image">
+                    <div class="item-details">
+                        <h3 class="item-name">Чай черный</h3>
+                        <p class="item-description">Классический черный чай</p>
+                        <div class="price-variants">
+                            <div class="price-variant">150 ₽ <div class="volume-info">мал.</div></div>
+                            <div class="price-variant">170 ₽ <div class="volume-info">сред.</div></div>
+                            <div class="price-variant">190 ₽ <div class="volume-info">бол.</div></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2064&q=80" alt="Чай с бергамотом" class="item-image">
+                    <div class="item-details">
+                        <h3 class="item-name">Чай с бергамотом</h3>
+                        <p class="item-description">Черный чай с ароматом бергамота</p>
+                        <div class="price-variants">
+                            <div class="price-variant">150 ₽ <div class="volume-info">мал.</div></div>
+                            <div class="price-variant">170 ₽ <div class="volume-info">сред.</div></div>
+                            <div class="price-variant">190 ₽ <div class="volume-info">бол.</div></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2064&q=80" alt="Чай каркаде" class="item-image">
+                    <div class="item-details">
+                        <h3 class="item-name">Чай каркаде</h3>
+                        <p class="item-description">Травяной чай из суданской розы</p>
+                        <div class="price-variants">
+                            <div class="price-variant">150 ₽ <div class="volume-info">мал.</div></div>
+                            <div class="price-variant">170 ₽ <div class="volume-info">сред.</div></div>
+                            <div class="price-variant">190 ₽ <div class="volume-info">бол.</div></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2064&q=80" alt="Чай зеленый" class="item-image">
+                    <div class="item-details">
+                        <h3 class="item-name">Чай зеленый</h3>
+                        <p class="item-description">Классический зеленый чай</p>
+                        <div class="price-variants">
+                            <div class="price-variant">150 ₽ <div class="volume-info">мал.</div></div>
+                            <div class="price-variant">170 ₽ <div class="volume-info">сред.</div></div>
+                            <div class="price-variant">190 ₽ <div class="volume-info">бол.</div></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://images.unsplash.com/photo-1571934811356-5cc061b6821f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2067&q=80" alt="Облепиха" class="item-image">
+                    <div class="item-details">
+                        <h3 class="item-name">Облепиха Spice</h3>
+                        <p class="item-description">Облепиховый чай с пряностями</p>
+                        <div class="item-price">300 ₽ <div class="volume-info">бол.</div></div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://images.unsplash.com/photo-1571934811356-5cc061b6821f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2067&q=80" alt="Клюква" class="item-image">
+                    <div class="item-details">
+                        <h3 class="item-name">Клюква</h3>
+                        <p class="item-description">Клюквенный чай</p>
+                        <div class="item-price">300 ₽ <div class="volume-info">бол.</div></div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://images.unsplash.com/photo-1571934811356-5cc061b6821f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2067&q=80" alt="Черная смородина" class="item-image">
+                    <div class="item-details">
+                        <h3 class="item-name">Черная смородина</h3>
+                        <p class="item-description">Чай из черной смородины</p>
+                        <div class="item-price">300 ₽ <div class="volume-info">бол.</div></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ХОТ-ДОГИ -->
+        <section class="menu-category" id="hot-dogs">
+            <h2 class="category-title">Хот-доги <span class="coffee-bean">🌭</span></h2>
+            <div class="menu-items">
+                <div class="menu-item">
+                    <img src="https://images.unsplash.com/photo-1550304943-4f24f54ddde9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Французский хот-дог" class="item-image">
+                    <div class="item-details">
+                        <h3 class="item-name">Французский</h3>
+                        <p class="item-description">Закрытая булочка, сосиска, соус</p>
+                        <div class="item-price">260 ₽</div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://images.unsplash.com/photo-1550304943-4f24f54ddde9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Нью-Йоркский хот-дог" class="item-image">
+                    <div class="item-details">
+                        <h3 class="item-name">Нью-Йоркский</h3>
+                        <p class="item-description">Открытая булочка, сосиска, маринованые огурчики, хрустящий лук</p>
+                        <div class="item-price">280 ₽</div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://images.unsplash.com/photo-1550304943-4f24f54ddde9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Мексиканский хот-дог" class="item-image">
+                    <div class="item-details">
+                        <h3 class="item-name">Мексиканский</h3>
+                        <p class="item-description">Открытая булочка, сосиска, халапеньо</p>
+                        <div class="item-price">280 ₽</div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://images.unsplash.com/photo-1550304943-4f24f54ddde9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Гриль сыр хот-дог" class="item-image">
+                    <div class="item-details">
+                        <h3 class="item-name">Гриль сыр</h3>
+                        <p class="item-description">Закрытая булочка, сосиска, моцарелла</p>
+                        <div class="item-price">300 ₽</div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://images.unsplash.com/photo-1550304943-4f24f54ddde9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Гуакамоле док хот-дог" class="item-image">
+                    <div class="item-details">
+                        <h3 class="item-name">Гуакамоле док</h3>
+                        <p class="item-description">Закрытая булочка, сосиска, свежий лук, помидор, гуакамоле</p>
+                        <div class="item-price">330 ₽</div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://images.unsplash.com/photo-1550304943-4f24f54ddde9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Беконайзер хот-дог" class="item-image">
+                    <div class="item-details">
+                        <h3 class="item-name">Беконайзер</h3>
+                        <p class="item-description">Закрытая булочка, сосиска, хрустящий лук, бекон</p>
+                        <div class="item-price">330 ₽</div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="special-badge">Хит</div>
+                    <img src="https://images.unsplash.com/photo-1550304943-4f24f54ddde9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Тейсти дог хот-дог" class="item-image">
+                    <div class="item-details">
+                        <h3 class="item-name">Тейсти дог</h3>
+                        <p class="item-description">Закрытая булочка, сосиска, свежий лук, салат айсберг, моцарелла</p>
+                        <div class="item-price">350 ₽</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Контакты</h3>
+                    <p>📍 ул. Кофейная, 15</p>
+                    <p>📞 +7 (999) 123-45-67</p>
+                    <p>🕒 Пн-Пт: 7:00-23:00</p>
+                    <p>🕒 Сб-Вс: 8:00-00:00</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Мы в соцсетях</h3>
+                    <div class="social-links">
+                        <a href="#">Instagram</a>
+                        <a href="#">VK</a>
+                        <a href="#">Telegram</a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>О кофейне</h3>
+                    <p>Свежая обжарка кофе</p>
+                    <p>Авторские рецепты</p>
+                    <p>Уютная атмосфера</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>© 2024 Red Cup Coffee. Ждём вас в гости!</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Функция для фильтрации меню по категориям
+        document.querySelectorAll('.category-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                // Убираем активный класс у всех кнопок
+                document.querySelectorAll('.category-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                
+                // Добавляем активный класс к нажатой кнопке
+                this.classList.add('active');
+                
+                const category = this.getAttribute('data-category');
+                
+                // Показываем/скрываем категории в зависимости от выбора
+                document.querySelectorAll('.menu-category').forEach(section => {
+                    if (category === 'all' || section.id === category) {
+                        section.style.display = 'block';
+                        // Добавляем анимацию при показе
+                        section.style.animation = 'fadeIn 0.5s ease-in';
+                    } else {
+                        section.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Плавная прокрутка к категориям
+        document.querySelectorAll('.category-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const category = this.getAttribute('data-category');
+                if (category !== 'all') {
+                    const section = document.getElementById(category);
+                    if (section) {
+                        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                } else {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
